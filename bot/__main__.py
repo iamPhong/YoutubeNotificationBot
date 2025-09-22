@@ -72,6 +72,10 @@ async def forever_check():
 sch.add_job(forever_check, "interval", minutes=DELAY_TIME)
 
 LOGS.info("Bot has started...")
-bot.loop.run_until_complete(save_it())
-sch.start()
+
+async def start_everything():
+    await save_it()
+    sch.start()
+
+bot.loop.run_until_complete(start_everything())
 bot.loop.run_forever()
