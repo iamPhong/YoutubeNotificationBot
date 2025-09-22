@@ -53,10 +53,10 @@ def yt_dl(yt_link, quality=None):
         return None
 
 
-async def proper_info_msg(client, to_id, yt_id):
+async def proper_info_msg(client, to_id, yt_id, override_name=None):
     dl_yt = ""
     info = video_info(yt_id)["items"][0]
-    channel_name = info["snippet"]["channelTitle"]
+    channel_name = override_name or info["snippet"]["channelTitle"]
     video_title = info["snippet"]["title"]
     try:
         desc = info["snippet"]["description"]
@@ -122,5 +122,6 @@ async def proper_info_msg(client, to_id, yt_id):
     try:
         os.remove(f"{thumb.split('/')[-2]}.jpg")
         os.remove(f"{yt_id}.mp4")
-    except BaseException:
+    except BaseException as er:
+        LOGS.info(f"Error removing files: {er}")
         pass

@@ -25,6 +25,17 @@ from googleapiclient.discovery import build
 from telethon import Button, TelegramClient, events
 from telethon.tl.types import DocumentAttributeVideo
 from yt_dlp import YoutubeDL
+from .db import (
+    init_db,
+    import_env_channels_if_empty,
+    get_channels,
+    get_channel,
+    add_channel,
+    remove_channel,
+    set_custom_name,
+    clear_custom_name,
+    get_all_channel_ids,
+)
 
 from .config import *
 
@@ -50,3 +61,6 @@ except Exception as e:
     LOGS.info("Environment vars are missing")
     LOGS.info(str(e))
     exit()
+
+init_db()
+import_env_channels_if_empty(CH_ID)
